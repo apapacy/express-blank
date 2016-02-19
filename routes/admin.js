@@ -7,12 +7,10 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/json-editor/:lang?', function(req, res, next) {
-  var lang = req.params.lang || 'ru';
-  console.log(process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json");
+router.get('/json-editor/get', function(req, res, next) {
+  var lang = res.locals["lang"];
   fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json","UTF-8",
     function(error,data){
-      console.log(data);
       res.render("JsonEditor/get.html.twig",{json: data});
     });
 });

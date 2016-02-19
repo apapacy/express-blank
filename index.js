@@ -49,7 +49,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/admin', admin);
+
+app.use('(/:lang)?/admin', function(request,responce,next){
+  if (request.params.lang) {
+    responce.locals.lang = request.params.lang;
+  } else {
+    responce.locals.lang = "ru";
+  }
+  next();
+});
+app.use('(/:lang)?/admin', admin);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
