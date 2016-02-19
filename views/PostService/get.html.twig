@@ -1,0 +1,38 @@
+<html>
+<head>
+{% stylesheets '@BlankAdminBundle/Resources/public/css/*'
+  filter='cssrewrite'
+  filter='uglifycss'%}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+<script  src="/assets/js/base.js"></script>
+<script  src="/assets/js/twig.js"></script>
+<script  src="/assets/js/require0.js"></script>
+<script  src="/assets/js/require0.config.js"></script>
+</head>
+<body>
+
+{ javascripts '@BlankAdminBundle/Resources/public/js/*'
+  filter='uglifyjs'
+}
+    <script src="{ asset_url }"></script>
+{ endjavascripts }
+
+
+id: {{ post.id}}<br />+++
+emailDate: {{ post.dateEmail.format('Y-m-d h:m') }} <br />
+
+
+
+
+{% javascripts "@BlankAdminBundle/Resources/views/PostService/go.js.twig"
+       filter="twig_js, ?yui_js" %}
+    <script language="javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+
+{% twig_js name="greeting" %}
+Hello {{ name|default("World") }}!
+</body>
+</html>

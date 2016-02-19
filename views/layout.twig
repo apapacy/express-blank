@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <application android:hardwareAccelerated="true"></application>
+  <title>{% block title %}{% endblock %}</title>
+
+  {% block headStyles %}
+    <link rel="stylesheet" href="/asset/css/font-awesome/css/font-awesome.min.css">
+  {% endblock %}
+
+  {% block headScripts %}
+  {% endblock %}
+</head>
+<body>
+
+{% block body %}{% endblock %}
+<div id="global_page_templates" style="display: none">
+  {% block pageTemplates %}{% endblock %}
+</div>
+</body>
+</html>

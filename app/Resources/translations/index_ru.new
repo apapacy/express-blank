@@ -1,0 +1,89 @@
+{
+  "price": 1389,
+  "title": "Elari",
+  "meta": [
+    "C++",
+    "Barbara Liskov",
+    "Brander",
+    "MIT"
+  ],
+  "parthners": [
+    {
+      "name": "Техноеж",
+      "url": "tehnoezh.com.ua",
+      "banner": "tehnoezh.jpg"
+    },
+    {
+      "name": "STYLUS",
+      "url": "stylus.com.ua",
+      "banner": "stylus.jpg"
+    },
+    {
+      "name": "repka.ua",
+      "url": "repka.ua",
+      "banner": "repka_logo.jpg"
+    },
+    {
+      "name": "Территория твоей техники",
+      "url": "www.ttt.ua",
+      "banner": "TTT.jpg"
+    },
+    {
+      "name": "ROZETKA",
+      "url": "rozetka.com.ua",
+      "banner": "Rozetka.jpg"
+    },
+    {
+      "name": "Notus",
+      "url": "www.notus.com.ua",
+      "banner": "Notus.jpg"
+    },
+    {
+      "name": "Мобиллак",
+      "url": "www.mobilluck.com.ua",
+      "banner": "Mobilluck.jpg"
+    },
+    {
+      "name": "MOYO",
+      "url": "www.moyo.ua",
+      "banner": "MOYO.jpg"
+    },
+    {
+      "name": "АЛЛО",
+      "url": "allo.ua",
+      "banner": "Logo_Allo.jpg"
+    },
+    {
+      "name": "Интернет-магазин Buy Joy",
+      "url": "joystore.com.ua",
+      "banner": "JOY.jpg"
+    },
+    {
+      "name": "ITbox",
+      "url": "www.itbox.ua",
+      "banner": "ITbox.jpg"
+    },
+    {
+      "name": "Fotos.ua",
+      "url": "f.ua",
+      "banner": "Fotos.ua.jpg"
+    }
+  ],
+  "page": {
+    "section1": {
+      "title": "Aнти-смартфон размером<span>с кредитную карту</span>",
+      "message": "42 грамма и 5.5 миллиметров толщины – <span>это тот случай, когда размер имеет значение!</span>"
+    },
+    "section2": {
+      "message": "Незаменим для отдыха, экстремального спорта и деловых людей"
+    },
+    "section3": {
+      "title": "Elari",
+      "message": "Украинский дистрибьютор смартфонов, гаджетов и аксессуаров. Торговый портфель Elari насчитывает продукцию свыше 10-ти брендов, большинство из которых поставляются в Украину на эксклюзивных условиях. Благодаря многолетнему опыту работы, мы предлагаем нашим клиентам, продукцию только проверенного качества, которая является актуальной."
+    },
+    "section8": {
+      "title": "Чехол для iPhone 6 и iPhone 6+",
+      "message": "Уникальный чехол–незаменимая вещь для вашего нового телефона. Покупая такой чехол ваш телефон всегда будет с вами. Торговый портфель SMART Group насчитывает продукцию свыше 10-ти брендов, большинство из которых поставляются в Украину на эксклюзивных условиях.\n"
+    }
+  }
+}
