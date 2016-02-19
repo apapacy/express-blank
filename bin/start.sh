@@ -1,1 +1,1 @@
-nodemon  --ext '.js|.css|.html|.twig' 
+nodemon  --ext '.js|.css|.html|.twig|.sass' 
