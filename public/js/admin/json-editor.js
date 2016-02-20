@@ -109,18 +109,19 @@ define(['jquery', 'json-editor/dist/jsoneditor.min', 'admin/image', 'jquery.elas
         data: jsonValue
       })
       .done(function(data, textStatus, jqXHR) {})
-      .then(function() {});
-    $.ajax({
-        url: "publish",
-        method: "POST",
-        contentType: "application/json",
-        data: jsonValue
-      })
-      .done(function(data, textStatus, jqXHR) {
-        $('<H1 style="font-size:70pt;color:green;position:absolute;">Данные опубликованы</H1>').insertAfter('#save').delay(3000).fadeOut();
-      })
-      .fail(function() {
-        $('<H1 style="font-size:70pt;color:red;position:absolute;">Проиошла ошибка</H1>').insertAfter('#save').delay(3000).fadeOut();
+      .then(function() {
+        $.ajax({
+            url: "publish",
+            method: "POST",
+            contentType: "application/json",
+            data: jsonValue
+          })
+          .done(function(data, textStatus, jqXHR) {
+            $('<H1 style="font-size:70pt;color:green;position:absolute;z-index:100;">Данные опубликованы</H1>').insertAfter('#save').delay(3000).fadeOut();
+          })
+          .fail(function() {
+            $('<H1 style="font-size:70pt;color:red;position:absolute;z-index:100;">Проиошла ошибка</H1>').insertAfter('#save').delay(3000).fadeOut();
+          });
       });
   });
 

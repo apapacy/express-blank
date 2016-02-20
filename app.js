@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//var upload = bodyParser.raw({type: "multipart/form-data"});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -56,7 +57,6 @@ app.use('(/:lang)?/admin', function(request,responce,next){
   } else {
     responce.locals.lang = "ru";
   }
-  console.log(request.body)
   next();
 });
 app.use('(/:lang)?/admin', admin);

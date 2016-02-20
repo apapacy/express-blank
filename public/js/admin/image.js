@@ -37,9 +37,10 @@ JSONEditor.defaults.editors.image = JSONEditor.AbstractEditor.extend({
     this.input.addEventListener('change', function(e) {
       self.setValue(this.value.match(/[^\\\/]+$/)[0]);
       var xhr = new XMLHttpRequest();
-      xhr.open("POST", 'image-upload?filename='+encodeURIComponent(self.getValue()) , false);
+      xhr.open("POST", 'upload?filename='+encodeURIComponent(self.getValue()) , false);
       //xhr.setRequestHeader("X_FILENAME", self.getValue());
       xhr.setRequestHeader("Content-Type", 'multipart/form-data');
+      console.log(this.files)
       xhr.send(this.files[0]);
       self.setValue(self.getValue());
       e.preventDefault();
