@@ -39,7 +39,7 @@ JSONEditor.defaults.editors.image = JSONEditor.AbstractEditor.extend({
       var xhr = new XMLHttpRequest();
       xhr.open("POST", 'upload?filename='+encodeURIComponent(self.getValue()) , false);
       //xhr.setRequestHeader("X_FILENAME", self.getValue());
-      xhr.setRequestHeader("Content-Type", 'multipart/form-data');
+      xhr.setRequestHeader("Content-Type", "application/octet-stream");
       console.log(this.files)
       xhr.send(this.files[0]);
       self.setValue(self.getValue());

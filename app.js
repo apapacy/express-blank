@@ -4,13 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//var upload = bodyParser.raw({type: "multipart/form-data"});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 
+
 var app = express();
+
+
+
+
 
 var Twig = require("twig"),
     express = require('express'),
@@ -32,11 +36,20 @@ app.get('/twig', function(req, res){
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.raw({
+  inflate: true,
+  limit: '1024mb'
+}));
+
+
+
+app.use(logger('dev'));
 app.use(cookieParser());
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
@@ -46,11 +59,13 @@ app.use(require('node-sass-middleware')({
   outputStyle: 'compressed'
   //force: true
 }));
-app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
-
 app.use('(/:lang)?/admin', function(request,responce,next){
   if (request.params.lang) {
     responce.locals.lang = request.params.lang;
@@ -60,6 +75,10 @@ app.use('(/:lang)?/admin', function(request,responce,next){
   next();
 });
 app.use('(/:lang)?/admin', admin);
+
+
+
+
 
 
 

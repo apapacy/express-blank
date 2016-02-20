@@ -1,13 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var fs = require("fs");
-var upload = require("multer", { dest: 'public/uploads/' });
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart()
-
-
-
-var multipart = require('connect-multiparty');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -34,13 +27,12 @@ router.post('/json-editor/post', function(req, res, next) {
     });
 });
 
-router.post('/json-editor/upload',   function(req, res, next) {
-  //var lang = res.locals["lang"];
-  req.on('data', function(data) {
-  fs.writeFile(process.cwd() + "/public/uploads/" + req.query.filename, data,
-    function(error,data){res.send("OK")});
-});
-
+router.post('/json-editor/upload', function(req, res, next) {
+  fs.writeFile(process.cwd() + "/public/uploads/" + req.query.filename, req.body,
+    function(error,data){
+      console.log(error);
+      res.send("OK")
+    });
 });
 
 router.post('/json-editor/publish', function(req, res, next) {
