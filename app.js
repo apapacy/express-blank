@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -20,7 +21,7 @@ app.set("twig options", {
 });
 
 app.get('/twig', function(req, res){
-  res.render('index.twig', {
+  res.render('JsonEditor/get.html.twig', {
     message : "Hello World"
   });
 });
@@ -48,6 +49,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+app.use('(/:lang)?/admin', function(request,responce,next){
+  if (request.params.lang) {
+    responce.locals.lang = request.params.lang;
+  } else {
+    responce.locals.lang = "ru";
+  }
+  console.log(request.body)
+  next();
+});
+app.use('(/:lang)?/admin', admin);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

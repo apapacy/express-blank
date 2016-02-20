@@ -15,6 +15,17 @@ router.get('/json-editor/get', function(req, res, next) {
     });
 });
 
+router.post('/json-editor/post', function(req, res, next) {
+  var lang = res.locals["lang"];
+  fs.writeFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json",
+    JSON.stringify(req.body),
+    function(error,data){
+      fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json","UTF-8",
+        function(error,data){
+          res.send(data);
+        });
+    });
+});
 
 
 module.exports = router;

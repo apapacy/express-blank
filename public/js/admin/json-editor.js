@@ -92,7 +92,7 @@ define(['jquery', 'json-editor/dist/jsoneditor.min', 'admin/image', 'jquery.elas
     $.ajax({
         url: "post",
         method: "POST",
-        contentType: "text/json",
+        contentType: "application/json",
         data: jsonValue
       })
       .done(
@@ -105,7 +105,7 @@ define(['jquery', 'json-editor/dist/jsoneditor.min', 'admin/image', 'jquery.elas
     $.ajax({
         url: "post",
         method: "POST",
-        contentType: "text/json",
+        contentType: "application/json",
         data: jsonValue
       })
       .done(function(data, textStatus, jqXHR) {})
@@ -113,7 +113,7 @@ define(['jquery', 'json-editor/dist/jsoneditor.min', 'admin/image', 'jquery.elas
     $.ajax({
         url: "publish",
         method: "POST",
-        contentType: "text/json",
+        contentType: "application/json",
         data: jsonValue
       })
       .done(function(data, textStatus, jqXHR) {
