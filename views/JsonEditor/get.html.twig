@@ -6,6 +6,10 @@
     <script src="/js/require.js" type="text/javascript"></script>
     <script src="/js/admin/require.config.js" type="text/javascript"></script>
 </head>
+{{ "title"|trans }}
+{% for parthner in ("parthners"|trans) %}
+{{parthner.name}}
+{% endfor %}
 <div class='container'>
     <div class='row'>
         <div class='col-md-8'>

@@ -25,6 +25,8 @@ app.set("twig options", {
     strict_variables: false
 });
 
+require("./app/twig-filters");
+
 app.get('/twig', function(req, res){
   res.render('JsonEditor/get.html.twig', {
     message : "Hello World"
