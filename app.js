@@ -72,7 +72,7 @@ app.all("^/([^\\/]+/)?admin/*", passport.authenticate(['basic'], {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/?([^\\/]{2})?', function(request, responce, next) {
+app.use('/?([a-z]{2})?', function(request, responce, next) {
   if (request.params[0]) {
     responce.locals["lang"] = request.params[0];
   } else {
@@ -82,9 +82,9 @@ app.use('/?([^\\/]{2})?', function(request, responce, next) {
 });
 
 
-app.use('(/[^\\/]{2})?', routes);
+app.use('(/[a-z]{2})?', routes);
 
-app.use('(/[^\\/]{2})?/admin', admin);
+app.use('(/[a-z]{2})?/admin', admin);
 
 //app.use('/?([^\\/]{2})?/admin', admin);
 
