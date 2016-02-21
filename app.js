@@ -69,10 +69,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('(/:lang)?/admin', function(request,responce,next){
-  if (request.params.lang) {
-    responce.locals.lang = request.params.lang;
+  if (request.params["lang"]) {
+    responce.locals["lang"] = request.params["lang"];
   } else {
-    responce.locals.lang = "ru";
+    responce.locals["lang"] = "ru";
   }
   next();
 });

@@ -30,7 +30,7 @@ function load(path) {
       walk(dottedTranslations[domain][lang], translations[domain][lang], 0, "");
     }
   }
-  console.log(dottedTranslations)
+  //console.log(dottedTranslations)
 }
 
 load("./app/Resources/translations");

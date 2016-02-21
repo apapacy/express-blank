@@ -39,14 +39,14 @@ router.post('/json-editor/upload', function(req, res, next) {
 
 router.post('/json-editor/publish', function(req, res, next) {
   var lang = res.locals["lang"];
-  fs.writeFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".json",
-    JSON.stringify(req.body),
-    function(error, data) {
+  fs.writeFileSync(process.cwd() + "/app/Resources/translations/messages." + lang + ".json",
+    JSON.stringify(req.body), "UTF-8")
+  //  function(error, data) {
       fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8",
         function(error, data) {
           res.send(data);
         });
-    });
+//    });
 });
 
 router.all('/mail', function(req, res, next) {
