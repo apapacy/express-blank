@@ -1,6 +1,7 @@
 var express = require('express');
+var passport = require('./app/passport');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -62,8 +63,7 @@ app.use(require('node-sass-middleware')({
   //force: true
 }));
 
-
-
+app.all("^/([^\\/]+/)?admin/*", passport.authenticate(['basic'], { session: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);

@@ -1,10 +1,10 @@
 var _ = require("lodash");
 var fs= require("fs");
 var prompt = require("prompt-sync").prompt;
-var dist = JSON.parse(fs.readFileSync("app/config/config.json.dist").toString("UTF-8"));
+var dist = JSON.parse(fs.readFileSync("app/config/parameners.json.dist").toString("UTF-8"));
 var config = {};
 try {
-  config = JSON.parse(fs.readFileSync("app/config/config.json").toString("UTF-8"));
+  config = JSON.parse(fs.readFileSync("app/config/parameters.json").toString("UTF-8"));
 } catch (ex) {
   console.log(ex);
 }
@@ -12,7 +12,7 @@ var result = {}
  _.assign(result, dist, config)
 walk(result, 0, "");
 //console.log(result);
-fs.writeFileSync("app/config/config.json", JSON.stringify(result, undefined, 4), "UTF-8");
+fs.writeFileSync("app/config/parameters.json", JSON.stringify(result, undefined, 4), "UTF-8");
 
 
 function walk(object, step, path) {
