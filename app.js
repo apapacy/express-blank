@@ -6,13 +6,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var admin = require('./routes/admin');
+var routes = require('./app/routes/index');
+var users = require('./app/routes/users');
+var admin = require('./app/routes/admin');
 
 var config = require("./app/config");
 console.log(config)
-console.log(config["admin.name"])
+console.log(config["app.admin.name"])
 var app = express();
 
 
@@ -38,7 +38,7 @@ app.get('/twig', function(req, res){
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'hbs');
 
 

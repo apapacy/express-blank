@@ -6,7 +6,7 @@
     <script src="/js/require.js" type="text/javascript"></script>
     <script src="/js/admin/require.config.js" type="text/javascript"></script>
 </head>
-{{ "title"|trans }}
+{{ "title"|trans(["one"], "two") }}
 {% for parthner in ("parthners"|trans) %}
 {{parthner.name}}
 {% endfor %}
