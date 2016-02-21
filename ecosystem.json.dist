@@ -1,0 +1,25 @@
+{
+  "apps" : [
+    {
+      "name"      : "cloud-exchange-backend",
+      "script"    : "bin/www",
+      "node_args"         : "--harmony",
+      "log_date_format"   : "YYYY-MM-DD HH:mm Z",
+      "error_file"        : "./log/node-app.stderr.log",
+      "out_file"          : "./log/node-app.stdout.log",
+      "watch"             : false,
+      "merge_logs"        : true,
+      "exec_mode"         : "fork",
+      "max_memory_restart": "250M",
+      "env": {
+        "COMMON_VARIABLE": "true",
+        "PORT": "8002",
+        "HOST": "obmen24.alpha.branderstudio.com",
+        "DATABASE_PASSWORD": "D+eWZGh5\"mY<T.Mg",
+        "DATABASE_NAME":"obmen24",
+        "DATABASE_USERNAME":"obmen24",
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

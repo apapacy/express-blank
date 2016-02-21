@@ -1,0 +1,7 @@
+{
+"test":"pest",
+ "ar" : ["0","1","2"],
+ "admin": {
+  "password":"password"
+ }
+}

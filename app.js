@@ -10,7 +10,9 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 
-
+var config = require("./app/config");
+console.log(config)
+console.log(config["admin.name"])
 var app = express();
 
 

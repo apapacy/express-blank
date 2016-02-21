@@ -1,7 +1,7 @@
 var _ = require("lodash");
 var fs= require("fs");
 var prompt = require("prompt-sync").prompt;
-var dist = JSON.parse(fs.readFileSync("app/config/parameners.json.dist").toString("UTF-8"));
+var dist = JSON.parse(fs.readFileSync("app/config/parameters.dist").toString("UTF-8"));
 var config = {};
 try {
   config = JSON.parse(fs.readFileSync("app/config/parameters.json").toString("UTF-8"));
@@ -21,8 +21,9 @@ function walk(object, step, path) {
     if (typeof object[prop] === "object") {
       walk(object[prop], 1 + step, path + prop + ".");
     } else {
+        object[prop] = String(object[prop]);
         answer = ""
-        process.stdout.write(path +  prop + " : ");
+        console.log(path +  prop + " : ");
         answer = prompt({value: object[prop]});
         if (answer) {
           object[prop] = answer;

@@ -1,15 +1,16 @@
 var passport = require('passport');
+var config = require("./config");
 var BasicStrategy = require('passport-http').BasicStrategy;
 //var DigestStrategy = require('passport-http').DigestStrategy;
 
 
 passport.use(new BasicStrategy(function(name, password, next) {
-  if (name !== "admin0") {
+  if (name !== config["app.admin.name"]) {
     return next(null, false, {
       message: 'Incorrect username'
     });
   }
-  if (password !== "password") {
+  if (password !== config["app.admin.password"]) {
     return done({name:name}, false, {
       message: 'Incorrect password'
     });
