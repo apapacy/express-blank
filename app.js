@@ -20,19 +20,19 @@ var app = express();
 
 
 var Twig = require("twig"),
-    express = require('express'),
-    app = express();
+  express = require('express'),
+  app = express();
 
 // This section is optional and used to configure twig.
 app.set("twig options", {
-    strict_variables: false
+  strict_variables: false
 });
 
 require("./app/twig-filters");
 
-app.get('/twig', function(req, res){
+app.get('/twig', function(req, res) {
   res.render('JsonEditor/get.html.twig', {
-    message : "Hello World"
+    message: "Hello World"
   });
 });
 
@@ -46,7 +46,9 @@ app.set('view engine', 'hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.raw({
   inflate: true,
   limit: '1024mb'
@@ -62,23 +64,29 @@ app.use(require('node-sass-middleware')({
   indentedSyntax: true,
   sourceMap: true,
   outputStyle: 'compressed'
-  //force: true
 }));
 
-app.all("^/([^\\/]+/)?admin/*", passport.authenticate(['basic'], { session: false }));
+app.all("^/([^\\/]+/)?admin/*", passport.authenticate(['basic'], {
+  session: false
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
-app.use('/users', users);
-app.use('(/:lang)?/admin', function(request,responce,next){
-  if (request.params["lang"]) {
-    responce.locals["lang"] = request.params["lang"];
+
+app.use('/?([^\\/]{2})?', function(request, responce, next) {
+  if (request.params[0]) {
+    responce.locals["lang"] = request.params[0];
   } else {
     responce.locals["lang"] = "ru";
   }
   next();
 });
-app.use('(/:lang)?/admin', admin);
+
+
+app.use('(/[^\\/]{2})?', routes);
+
+app.use('(/[^\\/]{2})?/admin', admin);
+
+//app.use('/?([^\\/]{2})?/admin', admin);
 
 
 
