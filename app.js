@@ -6,47 +6,26 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-require("./app/async");
-
 var routes = require('./app/routes/index');
 var users = require('./app/routes/users');
 var admin = require('./app/routes/admin');
 
-var config = require("./app/config");
-console.log(config)
-console.log(config["app.admin.name"])
 var app = express();
-
-
-
-
-
+// Twig engine is autoconfigured with where express is enables
+// It may be first in load chaining to prevent rewriting of express functional (bodyParser ...)
 var Twig = require("twig"),
   express = require('express'),
   app = express();
-
 // This section is optional and used to configure twig.
 app.set("twig options", {
   strict_variables: false
 });
-
 require("./app/twig-filters");
-
-app.get('/twig', function(req, res) {
-  res.render('JsonEditor/get.html.twig', {
-    message: "Hello World"
-  });
-});
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'hbs');
 
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -56,10 +35,7 @@ app.use(bodyParser.raw({
   limit: '1024mb'
 }));
 
-
-
 app.use(logger('dev'));
-app.use(cookieParser());
 
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
@@ -70,8 +46,13 @@ app.use(require('node-sass-middleware')({
 }));
 
 app.use("^(/[^\\/]+)?/admin(/[\s\S]*)?",passport.authenticate(['basic'],{session: false}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
+// i18n routers enabled:
+// - in templates {{lang}}
+// - in routes responce.locals["lang"]
+// - in some helpers as this.context._locals.lang or this.context.lang or ...
 app.use('^/?([a-z]{2})?', function(request, responce, next) {
   if (request.params[0]) {
     responce.locals["lang"] = request.params[0];
@@ -80,25 +61,20 @@ app.use('^/?([a-z]{2})?', function(request, responce, next) {
   }
   next();
 });
-
-
 app.use('(/[a-z]{2})?', routes);
-
 app.use('(/[a-z]{2})?/admin', admin);
-
-//app.use('/?([^\\/]{2})?/admin', admin);
-
-
-
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
+});
+
+app.get('/twig', function(req, res) {
+  res.render('JsonEditor/get.html.twig', {
+    message: "Hello World"
+  });
 });
 
 // error handlers
@@ -124,6 +100,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
