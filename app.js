@@ -1,3 +1,5 @@
+require("./app/async");
+
 var express = require('express');
 var passport = require('./app/passport');
 var path = require('path');
