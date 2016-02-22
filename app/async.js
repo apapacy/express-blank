@@ -5,11 +5,12 @@ function testPromise(message, timeout){
 }
 
 function ASYNC(self, promise){
-    promise.then(function(value));
+  console.log(this === self)
 }
 
 function noop(value){return value;}
 
 function* main(message){
-  console.log(yield ASYNC(this, testPromise(message)));
+  console.log(yield ASYNC(this, message));
 }
+main().next()
