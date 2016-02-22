@@ -1,5 +1,4 @@
-require("./app/async");
-
+var db = require("./app/db");
 var express = require('express');
 var passport = require('./app/passport');
 var path = require('path');

@@ -1,23 +1,31 @@
-function* async(promise) {
-  var iter = async.stack.pop();
+var stack = [];
+
+function* await (promise) {
+  var iter = stack.pop();
   promise.then(function(value) {
-    async.stack.push(iter);
-    var next = iter.next(value);
-    if (!next.done) {
-      async.stack.pop();
+    stack.push(iter);
+    try {
+      var next = iter.next(value);
+      if (!next.done) {
+        stack.pop();
+      }
+    } catch (ex) {
+      stack.pop();
+      throw ex;
     }
+  }).catch(function(ex) {
+    throw ex;
   });
   return yield;
 }
 
-function run(self, func, args) {
-  var iter = func.apply(self, args);
-  async.stack.push(iter);
+function async(func, args) {
+  var iter = func.apply(this, args);
+  stack.push(iter);
   iter.next();
 }
 
-async.run = run;
-
-async.stack = []
-
-module.exports = async;
+module.exports = {
+  await: await,
+  async: async
+};

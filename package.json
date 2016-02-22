@@ -16,11 +16,13 @@
     "lodash": "^4.5.0",
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
+    "mysql": "^2.10.2",
     "node-sass-middleware": "^0.8.0",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
     "prompt": "^1.0.0",
     "prompt-sync": "^3.0.0",
+    "sequelize": "^3.19.3",
     "serve-favicon": "^2.3.0",
     "sprintf-js": "^1.0.3",
     "twig": "^0.8.8"
