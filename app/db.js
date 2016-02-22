@@ -22,9 +22,11 @@ async(function*(){
       username: 'janedoe',
       birthday: new Date(1980, 6, 20)
     }));
-    console.log(jane.get({
+    yield * await(console.log(jane.get({
       plain: true
-    }));
+    })));
+    var str = yield * await("test")
+    console.log("++++" + str)
     var one = yield * await (User.findById(1, {
       plain: true
     }));
