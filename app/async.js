@@ -5,24 +5,24 @@ function testPromise(message, timeout) {
     }, timeout);
   });
 }
-
+async.stack = []
 function* async(promise) {
+  var it = async.stack.pop();
   promise.then(function(value) {
-    it.next(value);
+    async.stack.push(it)
+    var next = it.next(value);
+    if (next.done) {
+      async.stack.pop();
+    }
   });
   return yield;
 }
 
-function run(func, args) {
-  var self = null;
-  if (typeof this === "object") {
-    self = this;
-  }
+function run(self, func, args) {
   var iter = func.apply(self, args);
-  console.log(iter.next());
+  async.stack.push(iter);
+  iter.next();
 }
-
-
 
 function* main(message) {
   var value = yield * async(testPromise(message, 3000))
@@ -47,10 +47,16 @@ function* main(message) {
   console.log("*****" + value);
   console.log("after 7first promise");
   var value = yield * async(testPromise("8nextMessage", 3000))
-    //console.log(value);
+    console.log(value);
 }
 
+run(null, main, ["restify"]);
 
+function* test(){
+  var test = yield 16;
+  console.log("test: " + test)
+}
 
-var it = main("rest");
-console.log(it.next());
+//var it = test(18);
+//console.log(it.next())
+//console.log(it.next(20))
