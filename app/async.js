@@ -1,6 +1,6 @@
 var stack = [];
 
-function* await (promise) {
+function* await () {
   var iter = stack.pop();
   Promise.all(arguments).then(function(value) {
     stack.push(iter);
