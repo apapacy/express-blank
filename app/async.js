@@ -1,14 +1,16 @@
 var stack = [];
 
 function* await (promise) {
-  if (!promise || typeof (promise.then) !== "function") {
-    return promise;
-  }
   var iter = stack.pop();
-  promise.then(function(value) {
+  Promise.all(arguments).then(function(value) {
     stack.push(iter);
     try {
-      var next = iter.next(value);
+      var next;
+      if (value.length === 1) {
+        next = iter.next(value[0]);
+      } else {
+        next = iter.next(value);
+      }
       if (!next.done) {
         stack.pop();
       }
