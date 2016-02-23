@@ -1,5 +1,7 @@
 var stack = [];
 
+setInterval(function(){console.log(stack)},5000);
+
 function* await () {
   var iter = stack.pop();
   Promise.all(arguments).then(function(value) {

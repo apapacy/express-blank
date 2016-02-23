@@ -7,7 +7,8 @@ var sequelize = new Sequelize(
   "fitnes",
   "fitnes", {
     host: "localhost",
-    dialect: "mysql"
+    dialect: "mysql",
+    logging:false
   });
 
 var User = sequelize.define('user', {
@@ -15,42 +16,45 @@ var User = sequelize.define('user', {
   birthday: Sequelize.DATE,
   news: Sequelize.STRING,
 });
-
 async(function*(){
-  try {
-    yield * await(sequelize.sync({force:true}));
-    let jane = yield * await(User.create({
-      username: 'janedoe',
+for (var j =1; j<20;j++)
+yield * await(async(function*(){
+    var jane = [];
+        for(var i =0; i<1000; i++)
+
+    jane[jane.length]=User.create({
+      username: 'janedoe' + i,
       birthday: new Date(1980, 6, 20)
-    }), "ininininini");
-    console.log(jane)
+    });
+    yield * await.apply(null, jane)
+    console.log("**********")
     yield * await(console.log(jane[0].get({
       plain: true
     })));
-    var stri = yield * await("test")
-    console.log("++++" + str)
-    var one = yield * await (User.findById(1, {
-      plain: true
+}));
+yield * await(async(function*(){
+    var jane = [];
+        for(var i =0; i<10000; i++) {
+
+    yield * await(User.create({
+      username: 'janedoe' + i,
+      birthday: new Date(1980, 6, 20)
     }));
-    console.log("***************");
-    console.log(one.get({
-      plain: true
-    }));
-    var none = yield * await (User.findById(200000, {
-      plain: true
-    }));
-    console.log("***************");
-    console.log(two.get({
-      plain: true
-    }));
-    var two = yield * await (User.findById(2, {
-      plain: true
-    }));
-    console.log("***************");
-    console.log(two.get({
-      plain: true
-    }));
-  } catch (ex) {
-    console.log(ex)
+    async(function*(){
+        var jane = [];
+            for(var i =0; i<1000; i++)
+
+        jane[jane.length]=User.create({
+          username: 'janedoe' + i,
+          birthday: new Date(1980, 6, 20)
+        });
+        yield * await.apply(null, jane)
+        console.log("**********")
+        yield * await(console.log(jane[0].get({
+          plain: true
+        })));
+    });
   }
+
+}));
 });
