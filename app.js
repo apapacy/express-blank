@@ -1,3 +1,7 @@
+require("coffee-script")
+require("coffee-script/register")
+//require("./app/routes/admin.coffee");
+
 var db = require("./app/db");
 var express = require('express');
 var passport = require('./app/passport');
@@ -9,7 +13,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./app/routes/index');
 var users = require('./app/routes/users');
-var admin = require('./app/routes/admin');
+var admin = require('./app/routes/admin.coffee');
 
 var app = express();
 // Twig engine is autoconfigured with where express is enables

@@ -3,7 +3,6 @@ var router = express.Router();
 var fs = require("fs");
 var es5async = require("../async").async;
 var es5await = require("../async").await;
-var c2p = require("../async").prom;
 var asyncroute = require("../async").asyncroute;
 
 /* GET users listing. */
