@@ -30,7 +30,21 @@ function async(func, args) {
   iter.next();
 }
 
+function prom(func, args) {
+  return new Promise(function(ok, err) {
+    args.push(function(error, data) {
+      if (error) {
+        err(error)
+      } else {
+        ok(data);
+      }
+    })
+    func.apply(null, args);
+  });
+}
+
 module.exports = {
   await: await,
-  async: async
+  async: async,
+  prom: prom
 };

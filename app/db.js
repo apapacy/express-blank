@@ -1,3 +1,4 @@
+"use strict";
 var Sequelize = require('sequelize');
 var async = require("./async").async;
 var await = require("./async").await;
@@ -18,15 +19,15 @@ var User = sequelize.define('user', {
 async(function*(){
   try {
     yield * await(sequelize.sync({force:true}));
-    var jane = yield * await(User.create({
+    let jane = yield * await(User.create({
       username: 'janedoe',
       birthday: new Date(1980, 6, 20)
-    }));
+    }), "ininininini");
     console.log(jane)
-    yield * await(console.log(jane.get({
+    yield * await(console.log(jane[0].get({
       plain: true
     })));
-    var str = yield * await("test")
+    var stri = yield * await("test")
     console.log("++++" + str)
     var one = yield * await (User.findById(1, {
       plain: true
