@@ -1,10 +1,20 @@
 var stack = [];
 
-setInterval(function(){console.log(stack)},5000);
+setInterval(function() {
+  console.log(stack)
+}, 5000);
 
-function* await () {
+function* await (func, args) {
+  var promises = []
+  if (typeof func === "function") {
+    promises[0] = c2p(func, args);
+  } else {
+    for (var i = 0; i < arguments.length; i++) {
+      promises[i] = arguments[i];
+    }
+  }
   var iter = stack.pop();
-  Promise.all(arguments).then(function(value) {
+  Promise.all(promises).then(function(value) {
     stack.push(iter);
     try {
       var next;
@@ -34,11 +44,12 @@ function async(func, args) {
 
 function asyncroute(func) {
   return function() {
-    return async(func.apply(this, arguments));
+    console.log(func.apply)
+    return async(func, arguments);
   }
 }
 
-function prom(func, args) {
+function c2p(func, args) {
   return new Promise(function(ok, err) {
     args.push(function(error, data) {
       if (error) {
@@ -54,5 +65,6 @@ function prom(func, args) {
 module.exports = {
   await: await,
   async: async,
-  prom: prom
+  c2p: c2p,
+  asyncroute: asyncroute
 };

@@ -1,21 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var fs = require("fs");
+var es5async = require("../async").async;
+var es5await = require("../async").await;
+var c2p = require("../async").prom;
+var asyncroute = require("../async").asyncroute;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/json-editor/get', function(req, res, next) {
+router.get('/json-editor/get', asyncroute(function*(req, res, next) {
   var lang = res.locals["lang"];
-  fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", "UTF-8",
-    function(error, data) {
-      res.render("JsonEditor/get.html.twig", {
-        json: data
-      });
+    var data = yield * es5await(fs.readFile, [process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json"]);
+    res.render("JsonEditor/get.html.twig", {
+      json: data
     });
-});
+}));
 
 router.post('/json-editor/post', function(req, res, next) {
   var lang = res.locals["lang"];
@@ -40,41 +42,41 @@ router.post('/json-editor/upload', function(req, res, next) {
 router.post('/json-editor/publish', function(req, res, next) {
   var lang = res.locals["lang"];
   fs.writeFileSync(process.cwd() + "/app/Resources/translations/messages." + lang + ".json",
-    JSON.stringify(req.body), "UTF-8")
-  //  function(error, data) {
-      fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8",
-        function(error, data) {
-          res.send(data);
-        });
-//    });
+      JSON.stringify(req.body), "UTF-8")
+    //  function(error, data) {
+  fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8",
+    function(error, data) {
+      res.send(data);
+    });
+  //    });
 });
 
 router.all('/mail', function(req, res, next) {
-    var lang = res.locals["lang"];
+  var lang = res.locals["lang"];
 
-    var email = require("emailjs");
-    var server = email.server.connect({
-      host: "178.159.110.48",
-      port: "587",
-      user: "aura",
-      password: "ieph8aV9aethae9oosha"
-    });
-
-    var message = {
-      text: "i hope this works",
-      from: "ovcharenkoav@aurafit.com.ua",
-      to: "an6rey@gmail.com",
-      cc: "comb-in@narod.ru",
-      subject: "testing emailjs",
-      attachment: [{
-        data: "<html>i <i>hope</i> this works!</html>",
-        alternative: true
-      }]
-    };
-    for (var i =0; i<100; i++)
-  server.send(message, function(error, data) {
-      //res.send(error || data);
+  var email = require("emailjs");
+  var server = email.server.connect({
+    host: "178.159.110.48",
+    port: "587",
+    user: "aura",
+    password: "ieph8aV9aethae9oosha"
   });
+
+  var message = {
+    text: "i hope this works",
+    from: "ovcharenkoav@aurafit.com.ua",
+    to: "an6rey@gmail.com",
+    cc: "comb-in@narod.ru",
+    subject: "testing emailjs",
+    attachment: [{
+      data: "<html>i <i>hope</i> this works!</html>",
+      alternative: true
+    }]
+  };
+  for (var i = 0; i < 100; i++)
+    server.send(message, function(error, data) {
+      //res.send(error || data);
+    });
   res.send("OK")
 });
 
