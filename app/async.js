@@ -32,6 +32,12 @@ function async(func, args) {
   iter.next();
 }
 
+function asyncroute(func) {
+  return function() {
+    func.apply(this, arguments);
+  }
+}
+
 function prom(func, args) {
   return new Promise(function(ok, err) {
     args.push(function(error, data) {

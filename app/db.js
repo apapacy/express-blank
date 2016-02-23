@@ -17,8 +17,10 @@ var User = sequelize.define('user', {
   news: Sequelize.STRING,
 });
 async(function*(){
+  yield*await(sequelize.sync({force:true}))
 for (var j =1; j<20;j++)
 yield * await(async(function*(){
+      yield * await();
     var jane = [];
         for(var i =0; i<1000; i++)
 
