@@ -1,10 +1,14 @@
+"use strict";
+
 var stack = [];
 
 setInterval(function() {
   console.log(stack)
 }, 5000);
 
-function* await (func, args) {
+
+// Throwable await
+function* tawait(func, args) {
   var promises = []
   if (typeof func === "function") {
     promises[0] = c2p(func, args);
@@ -23,15 +27,58 @@ function* await (func, args) {
       } else {
         next = iter.next(value);
       }
-      if (!next.done) {
-        stack.pop();
-      }
+      stack.pop();
     } catch (ex) {
       stack.pop();
       throw ex;
     }
   }).catch(function(ex) {
     throw ex;
+  });
+  return yield;
+}
+
+
+// Errorreturned await
+function* eawait(func, args) {
+  var promises = []
+  if (typeof func === "function") {
+    promises[0] = c2p(func, args);
+  } else {
+    for (var i = 0; i < arguments.length; i++) {
+      promises[i] = arguments[i];
+    }
+  }
+  var iter = stack.pop();
+  Promise.all(promises).then(function(value) {
+    stack.push(iter);
+    try {
+      var next;
+      if (value.length === 1) {
+        next = iter.next(value[0]);
+      } else {
+        next = iter.next(value);
+      }
+      stack.pop();
+    } catch (ex) {
+      stack.pop();
+      throw ex;
+    }
+  }).catch(function(ex) {
+    var next;
+    stack.push(iter);
+    try {
+      var next;
+      if (value.length === 1) {
+        next = iter.next(value[0]);
+      } else {
+        next = iter.next(value);
+      }
+      stack.pop();
+    } catch (ex) {
+      stack.pop();
+      throw ex;
+    }
   });
   return yield;
 }
@@ -62,7 +109,8 @@ function c2p(func, args) {
 }
 
 module.exports = {
-  await: await,
+  tawait: tawait,
+  eawait: eawait,
   async: async,
   c2p: c2p,
   asyncroute: asyncroute

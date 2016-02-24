@@ -1,7 +1,7 @@
 "use strict";
 var Sequelize = require('sequelize');
 var async = require("./async").async;
-var await = require("./async").await;
+var await = require("./async").eawait;
 var sequelize = new Sequelize(
   "aurafit",
   "fitnes",
