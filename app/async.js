@@ -117,6 +117,7 @@ function $c2p(args) {
     output.push(function(error, data) {
       if (error) {
         err(error)
+        return;
       } else {
         ok(data);
       }
