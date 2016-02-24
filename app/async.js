@@ -44,7 +44,6 @@ function async(func, args) {
 
 function asyncroute(func) {
   return function() {
-    console.log(func.apply)
     return async(func, arguments);
   }
 }

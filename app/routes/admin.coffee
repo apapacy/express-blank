@@ -30,6 +30,7 @@ router.post '/json-editor/post', Async (req, res, next) ->
 
 router.post '/json-editor/publish', Async (req, res, next) ->
   lang = res.locals.lang
+  # Асинхронное чтение валит watch
   fs.writeFileSync process.cwd() + "/app/Resources/translations/messages." + lang + ".json",
     JSON.stringify(req.body), "UTF-8"
   data = yield from Await fs.readFile, [process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8"]
