@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require("lodash");
 var fs= require("fs");
 var dottedConfig = {};
@@ -15,12 +17,12 @@ function walk(target, source, step, path) {
 try {
   var parameters = JSON.parse(fs.readFileSync("app/config/parameters.json").toString("UTF-8"));
 } catch (ex) {
-  parameters = {};
+  var parameters = {};
   console.log(ex);
 }
 
 try {
-  config = JSON.parse(fs.readFileSync("app/config/config.json").toString("UTF-8"));
+  var config = JSON.parse(fs.readFileSync("app/config/config.json").toString("UTF-8"));
 } catch (ex) {
   config = {};
   console.log(ex);

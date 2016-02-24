@@ -1,5 +1,7 @@
+"use strict";
+
 var Twig = require("twig");
-var translations = require("./translations");
+var translations = require("./translations").translations;
 
 Twig.extendFilter("trans", function(value) {
   var lang = this.context._locals.lang || "ru";

@@ -1,3 +1,5 @@
+"use strict";
+
 var passport = require('passport');
 var config = require("./config");
 var BasicStrategy = require('passport-http').BasicStrategy;

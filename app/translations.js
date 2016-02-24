@@ -1,3 +1,5 @@
+"use strict";
+
 var fs = require("fs");
 
 var translations = {};
@@ -13,7 +15,7 @@ function walk(target, source, step, path) {
 }
 
 function load(path) {
-  paths = fs.readdirSync(path);
+  var paths = fs.readdirSync(path);
   var matches;
   for (var i = 0; i < paths.length; i++) {
     if (matches = paths[i].match(/([^.]+)\.(\w{2})\.json/)) {
@@ -34,8 +36,17 @@ function load(path) {
 
 load("./app/Resources/translations");
 
-fs.watch("./app/Resources/translations", function(eventName, fileName) {
+function reload() {
   load("./app/Resources/translations");
-});
 
-module.exports = dottedTranslations;
+}
+
+// Валит Нод при асинхрнной записи
+//fs.watch("./app/Resources/translations", function(eventName, fileName) {
+//  load("./app/Resources/translations");
+//});
+
+module.exports = {
+  translations: dottedTranslations,
+  reload: reload
+};

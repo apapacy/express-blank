@@ -5,10 +5,12 @@ JSONEditor.defaults.editors.image = JSONEditor.AbstractEditor.extend({
   //sanitize: function(value) {
   //  return  value.match(/[^\\\/]+$/)[0];
   //},
-  setValue: function(value, initial) {
-    this.value = String(value) || initial;
-    $(this.img).attr("src", '/uploads/' + this.value);
-    this.onChange();
+  setValue: function(value) {
+    this.value = String(value);
+    if (this.value) {
+      $(this.img).attr("src", '/uploads/' + this.value);
+      this.onChange();
+    }
     //this.fireSetEvent();
     return value;
   },
@@ -38,7 +40,8 @@ JSONEditor.defaults.editors.image = JSONEditor.AbstractEditor.extend({
       self.setValue(this.value.match(/[^\\\/]+$/)[0]);
       var xhr = new XMLHttpRequest();
       xhr.open("POST", 'upload?filename='+encodeURIComponent(self.getValue()) , false);
-      //xhr.setRequestHeader("X_FILENAME", self.getValue());
+      // Не все серверы пропускают этот заголовок
+      // xhr.setRequestHeader("X_FILENAME", self.getValue());
       xhr.setRequestHeader("Content-Type", "application/octet-stream");
       console.log(this.files)
       xhr.send(this.files[0]);

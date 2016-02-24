@@ -1,8 +1,8 @@
 require("coffee-script")
 require("coffee-script/register")
-//require("./app/routes/admin.coffee");
-
 var db = require("./app/db");
+
+
 var express = require('express');
 var passport = require('./app/passport');
 var path = require('path');

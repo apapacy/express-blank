@@ -7,16 +7,25 @@ setInterval(function() {
 }, 5000);
 
 
-// Throwable await
-function* tawait(func, args) {
-  var promises = []
-  if (typeof func === "function") {
-    promises[0] = c2p(func, args);
-  } else {
-    for (var i = 0; i < arguments.length; i++) {
-      promises[i] = arguments[i];
+function $promify(args) {
+  var output = [];
+  if (typeof args[0] === "function") {
+    output[0] = $c2p(args);
+    return output;
+  }
+  for (var i = 0; i < args.length; i++) {
+    if (args[i] instanceof Array) {
+      output[i] = $c2p(args[i]);
+    } else {
+      output[i] = args[i];
     }
   }
+  return output;
+}
+
+// Throwable await
+function* $tawait() {
+  var promises = $promify(arguments);
   var iter = stack.pop();
   Promise.all(promises).then(function(value) {
     stack.push(iter);
@@ -29,7 +38,9 @@ function* tawait(func, args) {
       }
       stack.pop();
     } catch (ex) {
-      stack.pop();
+      if (stack[stack.length] === iter) {
+        stack.pop();
+      }
       throw ex;
     }
   }).catch(function(ex) {
@@ -40,15 +51,8 @@ function* tawait(func, args) {
 
 
 // Errorreturned await
-function* eawait(func, args) {
-  var promises = []
-  if (typeof func === "function") {
-    promises[0] = c2p(func, args);
-  } else {
-    for (var i = 0; i < arguments.length; i++) {
-      promises[i] = arguments[i];
-    }
-  }
+function* $eawait() {
+  var promises = $promify(arguments);
   var iter = stack.pop();
   Promise.all(promises).then(function(value) {
     stack.push(iter);
@@ -61,7 +65,9 @@ function* eawait(func, args) {
       }
       stack.pop();
     } catch (ex) {
-      stack.pop();
+      if (stack[stack.length] === iter) {
+        stack.pop();
+      }
       throw ex;
     }
   }).catch(function(ex) {
@@ -76,42 +82,53 @@ function* eawait(func, args) {
       }
       stack.pop();
     } catch (ex) {
-      stack.pop();
+      if (stack[stack.length] === iter) {
+        stack.pop();
+      }
       throw ex;
     }
   });
   return yield;
 }
 
-function async(func, args) {
+function $async(func, args) {
   var iter = func.apply(this, args);
   stack.push(iter);
   iter.next();
 }
 
-function asyncroute(func) {
-  return function() {
-    return async(func, arguments);
+function $asyncroute(func) {
+  return function(req, resp, next) {
+    try {
+      return $async(func, arguments);
+    } catch (ex) {
+      resp.status(500).send(ex).end();
+    }
   }
 }
 
-function c2p(func, args) {
+function $c2p(args) {
+  var func = args[0];
+  var output = [];
+  for (var i = 1; i < args.length; i++) {
+    output.push(args[i]);
+  }
   return new Promise(function(ok, err) {
-    args.push(function(error, data) {
+    output.push(function(error, data) {
       if (error) {
         err(error)
       } else {
         ok(data);
       }
     })
-    func.apply(null, args);
+    func.apply(null, output);
   });
 }
 
 module.exports = {
-  tawait: tawait,
-  eawait: eawait,
-  async: async,
-  c2p: c2p,
-  asyncroute: asyncroute
+  await: $tawait,
+  tawait: $tawait,
+  eawait: $eawait,
+  async: $async,
+  asyncroute: $asyncroute
 };
