@@ -36,7 +36,7 @@ yield * await(async(function*(){
 }));
 yield * await(async(function*(){
     var jane = [];
-        for(var i =0; i<10000; i++) {
+        for(var i =0; i<1000; i++) {
 
     yield * await(User.create({
       username: 'janedoe' + i,
@@ -44,7 +44,7 @@ yield * await(async(function*(){
     }));
     async(function*(){
         var jane = [];
-            for(var i =0; i<1000; i++)
+            for(var i =0; i<200; i++)
 
         jane[jane.length]=User.create({
           username: 'janedoe' + i,
