@@ -5,7 +5,9 @@ require('traceur').require.makeDefault(function(filename) {
     return filename.indexOf('node_modules') === -1;
 }, {
   annotations: true,
-  asyncFunctions: true
+  asyncFunctions: true,
+  asyncGenerators: true,
+  jsx:true,
 });
 
 

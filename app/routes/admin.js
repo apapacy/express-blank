@@ -2,57 +2,47 @@
 var express = require('express');
 var router = express.Router();
 var fs = require("fs");
-var es5async = require("../async").async;
-var es5await = require("../async").await;
-var asyncroute = require("../async").asyncroute;
+var es5 = require("es5-await");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/json-editor/get', async function(req, res, next) {
+  var lang = res.locals.lang;
+  try {
+    var data = await es5.c2p([fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json"]);
+  } catch (ex) {
+    console.log(ex)
+    res.status(500).json(ex).end();
+    return;
+  }
+  console.log(data);
+  res.render("JsonEditor/get.html.twig", {
+    json: data
+  });
 });
 
-router.get('/json-editor/get', asyncroute(function*(req, res, next) {
-  var lang = res.locals["lang"];
-    var data = yield * es5await(fs.readFile, [process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json"]);
-    res.render("JsonEditor/get.html.twig", {
-      json: data
-    });
-}));
 
-router.post('/json-editor/post', function(req, res, next) {
-  var lang = res.locals["lang"];
-  fs.writeFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json",
-    JSON.stringify(req.body),
-    function(error, data) {
-      fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", "UTF-8",
-        function(error, data) {
-          res.send(data);
-        });
-    });
+
+router.post('/json-editor/post', async function(req, res, next) {
+  var lang = res.locals.lang;
+  await es5.c2p([fs.writeFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", JSON.stringify(req.body, null, 2)]);
+  var data = await es5.c2p([fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", "UTF-8"]);
+  res.send(data);
 });
 
-router.post('/json-editor/upload', function(req, res, next) {
-  fs.writeFile(process.cwd() + "/public/uploads/" + req.query.filename, req.body,
-    function(error, data) {
-      console.log(error);
-      res.send("OK")
-    });
+router.post('/json-editor/publish', async function(req, res, next) {
+  var lang = res.locals.lang
+  await es5.c2p([fs.writeFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".json", JSON.stringify(req.body, null, 2), "UTF-8"]);
+  require("../translations").reload();
+  var data = await es5.c2p([fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8"]);
+  res.send(data);
 });
 
-router.post('/json-editor/publish', function(req, res, next) {
-  var lang = res.locals["lang"];
-  fs.writeFileSync(process.cwd() + "/app/Resources/translations/messages." + lang + ".json",
-      JSON.stringify(req.body), "UTF-8")
-    //  function(error, data) {
-  fs.readFile(process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8",
-    function(error, data) {
-      res.send(data);
-    });
-  //    });
+router.post('/json-editor/upload', async function(req, res, next) {
+  var data = await es5.c2p([fs.writeFile, process.cwd() + "/public/uploads/" + req.query.filename, req.body]);
+  res.send("OK");
 });
 
 router.all('/mail', function(req, res, next) {
-  var lang = res.locals["lang"];
+  var lang = res.locals.lang;
 
   var email = require("emailjs");
   var server = email.server.connect({
