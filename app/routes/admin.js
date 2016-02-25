@@ -41,7 +41,7 @@ router.post('/json-editor/upload', async function(req, res, next) {
   res.send("OK");
 });
 
-router.all('/mail', function(req, res, next) {
+router.all('/mail', async function(req, res, next) {
   var lang = res.locals.lang;
 
   var email = require("emailjs");
@@ -55,7 +55,7 @@ router.all('/mail', function(req, res, next) {
   var message = {
     text: "i hope this works",
     from: "ovcharenkoav@aurafit.com.ua",
-    to: "an6rey@gmail.com",
+    to: "ovcharenkoav@meta.ua",
     cc: "comb-in@narod.ru",
     subject: "testing emailjs",
     attachment: [{
@@ -63,11 +63,15 @@ router.all('/mail', function(req, res, next) {
       alternative: true
     }]
   };
-  for (var i = 0; i < 100; i++)
-    server.send(message, function(error, data) {
-      //res.send(error || data);
-    });
-  res.send("OK")
+  var data = [];
+  for (var i = 0; i < 1; i++) {
+    data.push(es5.c2p.apply(server, [[server.send, message]]));
+  }
+  console.log(data);
+  data = await Promise.all(data);
+
+  console.log(data);
+  res.send(data);
 });
 
 

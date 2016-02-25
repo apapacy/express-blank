@@ -75,7 +75,6 @@ function _promify(args) {
 }
 
 function _c2p(args) {
-  var self = this;
   var func = args[0];
   var output = [];
   for (var i = 1; i < args.length; i++) {
@@ -89,7 +88,7 @@ function _c2p(args) {
         ok(data);
       }
     })
-    func.apply(self, output);
+    func.apply(this, output);
   });
 }
 

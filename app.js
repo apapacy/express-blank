@@ -1,3 +1,5 @@
+"use setrict";
+
 require("coffee-script")
 require("coffee-script/register")
 require('traceur').require.makeDefault(function(filename) {
