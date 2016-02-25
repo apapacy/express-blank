@@ -7,6 +7,7 @@ require('traceur').require.makeDefault(function(filename) {
     return filename.indexOf('node_modules') === -1;
 }, {
   annotations: true,
+  arrayComprehension: true,
   asyncFunctions: true,
   asyncGenerators: true,
   jsx:true,
@@ -28,7 +29,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./app/routes/index');
 var users = require('./app/routes/users');
-var admin = require('./app/routes/admin.coffee');
+var admin = require('./app/routes/admin');
 
 var app = express();
 // Twig engine is autoconfigured with where express is enables

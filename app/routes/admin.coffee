@@ -2,6 +2,7 @@ express = require "express"
 router = express.Router()
 fs = require "fs"
 es5 = require "es5-await"
+utils = require "../utils"
 
 router.get '/test', (req, res, next) ->
   console.log "coffee cup"
@@ -54,11 +55,11 @@ router.all '/mail', es5.asyncroute (req, res, next) ->
     ]
   }
   data = []
-  for i in [0..0]
-    data.push((es5.c2p.apply(server, [[server.send, message]])));
+  for i in [0..10]
+    data.push utils.promify server, server.send, message
   console.log data
   output = yield from es5.await.apply(null,data)
   console.log output
-  res.json data
+  res.json output
 
 module.exports = router;

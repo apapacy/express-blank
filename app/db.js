@@ -1,7 +1,7 @@
 "use strict";
 var Sequelize = require('sequelize');
-var async = require("./async").async;
-var await = require("./async").eawait;
+var es5 = require("./async");
+
 var sequelize = new Sequelize(
   "aurafit",
   "fitnes",
@@ -16,47 +16,25 @@ var User = sequelize.define('user', {
   birthday: Sequelize.DATE,
   news: Sequelize.STRING,
 });
-async(function*(){
-  yield*await(sequelize.sync({force:true}))
-for (var j =1; j<20;j++)
-yield * await(async(function*(){
-      yield * await();
-    var jane = [];
-        for(var i =0; i<1000; i++)
 
-    jane[jane.length]=User.create({
-      username: 'janedoe' + i,
+es5.async(function * n() {
+
+  yield * es5.await(sequelize.sync({
+    force: true
+  }));
+  var promises = []
+  for (var i =0 ; i < 100; i++) {
+    promises[i] = User.create({
+      username: 'janedoe',
       birthday: new Date(1980, 6, 20)
-    });
-    yield * await.apply(null, jane)
-    console.log("**********")
-    yield * await(console.log(jane[0].get({
-      plain: true
-    })));
-}));
-yield * await(async(function*(){
-    var jane = [];
-        for(var i =0; i<1000; i++) {
-
-    yield * await(User.create({
-      username: 'janedoe' + i,
-      birthday: new Date(1980, 6, 20)
-    }));
-    async(function*(){
-        var jane = [];
-            for(var i =0; i<200; i++)
-
-        jane[jane.length]=User.create({
-          username: 'janedoe' + i,
-          birthday: new Date(1980, 6, 20)
-        });
-        yield * await.apply(null, jane)
-        console.log("**********")
-        yield * await(console.log(jane[0].get({
-          plain: true
-        })));
     });
   }
-
-}));
+  var peoples = yield * es5.await.apply(null, promises);
+  console.log(peoples[99].get({
+    plain: true
+  }))
+  var jane = yield * es5.await(User.findById(16));
+  console.log(jane.get({
+    plain: true
+  }));
 });
