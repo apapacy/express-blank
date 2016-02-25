@@ -1,6 +1,17 @@
 require("coffee-script")
 require("coffee-script/register")
-var db = require("./app/db");
+require('traceur').require.makeDefault(function(filename) {
+    // don't transpile our dependencies, just our app
+    return filename.indexOf('node_modules') === -1;
+}, {
+  annotations: true,
+  asyncFunctions: true
+});
+
+
+
+
+var db = require("./app/db7");
 
 
 var express = require('express');
