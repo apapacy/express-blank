@@ -17,7 +17,7 @@ require('traceur').require.makeDefault(function(filename) {
 
 
 //var db = require("./app/db7");
-var soap = require("./app/controller/soap");
+var soap = require("./app/controller/soap.coffee");
 
 var express = require('express');
 var passport = require('./app/passport');
