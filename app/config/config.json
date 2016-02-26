@@ -1,9 +1,16 @@
 {
-    "test": "test",
-    "ar": [
-        "less",
-        "wess",
-        "pess",
-        "mess"
-    ]
+  "soap": {
+    "server": "37.57.73.227",
+    "path": "/AURA2-FIT/ws/PersonalAccount",
+    "login": "PersonalAccount",
+    "password": "Sport2015",
+    "version": "1.2"
+  },
+  "test": "test",
+  "ar": [
+    "less",
+    "wess",
+    "pess",
+    "mess"
+  ]
 }

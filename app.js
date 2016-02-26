@@ -16,8 +16,8 @@ require('traceur').require.makeDefault(function(filename) {
 
 
 
-var db = require("./app/db7");
-
+//var db = require("./app/db7");
+var soap = require("./app/controller/soap");
 
 var express = require('express');
 var passport = require('./app/passport');
@@ -30,6 +30,7 @@ var bodyParser = require('body-parser');
 var routes = require('./app/routes/index');
 var users = require('./app/routes/users');
 var admin = require('./app/routes/admin');
+var soap = require('./app/routes/soap');
 
 var app = express();
 // Twig engine is autoconfigured with where express is enables
@@ -84,6 +85,7 @@ app.use('^/?([a-z]{2})?', function(request, responce, next) {
 });
 app.use('(/[a-z]{2})?', routes);
 app.use('(/[a-z]{2})?/admin', admin);
+app.use('/soap', soap);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

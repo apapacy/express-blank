@@ -9,7 +9,8 @@ router.get('/json-editor/get', async function(req, res, next) {
   try {
     var data = await promify(fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json");
   } catch (ex) {
-    console.log(ex)
+    console.log(ex);
+    console.log(data);
     res.status(500).json(ex).end();
     return;
   }

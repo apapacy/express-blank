@@ -7,12 +7,12 @@ var BasicStrategy = require('passport-http').BasicStrategy;
 
 passport.use(new BasicStrategy(function(name, password, next) {
   if (name !== config["app.admin.name"]) {
-    return next(null, false, {
+    return next("Not valid user", false, {
       message: 'Incorrect username'
     });
   }
   if (password !== config["app.admin.password"]) {
-    return done({name:name}, false, {
+    return next(null, false, {
       message: 'Incorrect password'
     });
   }
