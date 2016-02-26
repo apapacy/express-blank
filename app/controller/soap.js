@@ -33,22 +33,24 @@ async function getClient() {
 }
 
 async function GetShedule(StartDate, EndDate, clientID, ClubID) {
+  console.log(arguments);
   var client = await getClient();
   if (typeof client === "undefined") {
     return undefined;
   }
-  if (!ClubID || Number(ClubID) !== 1 || Number(ClubID) !== 5) {
+  if (!ClubID && (Number(ClubID) !== 1) && (Number(ClubID) !== 5)) {
     ClubID = "";
   }
   if (!clientID) {
-    clientID = "";
+  //  clientID = "";
   }
+  console.log("+++++"+ClubID+"*************")
   try {
     var shedules = await utils.promify2(client, client.GetShedule, {
-      clientID: clientID,
       StartDate: StartDate,
       EndDate: EndDate,
-      ClubID: ClubID
+      clientID: String(clientID),
+      ClubID: String(ClubID)
     });
     shedules = await utils.promify2(undefined, xml2js.parseString, shedules[1].return, {
       explicitArray: false

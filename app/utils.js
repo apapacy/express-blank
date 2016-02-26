@@ -67,19 +67,13 @@ function promify2() {
         if (arguments.length === 2) {
           resolve(data);
         } else {
-          resolve(arguments);          
+          resolve(arguments);
         }
       }
     })
-    console.log("555555555555555555")
-    console.log(func)
     func.apply(self, args);
   });
 }
-
-
-
-
 
 module.exports = {
   promify: promify,
