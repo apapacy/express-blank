@@ -1,94 +1,92 @@
 "use strict";
 
-var stack = [];
+var stack =[];
 
 function _async(func, args) {
   var iter = func.apply(this, args);
   stack.push(iter);
   iter.next();
+  return iter;
 }
 
 // For Express user
 function _asyncroute(func) {
-  return function(req, resp, next) {
+  return function() {
     try {
       return _async(func, arguments);
     } catch (ex) {
-      console.log(ex);
+      console.error(ex);
     }
   }
 }
 
 function* _await() {
-  var promises = _promify(arguments);
-  var iter = stack.pop();
-  Promise.all(promises).then(function(value) {
-    stack.push(iter);
+  var iter = stack[stack.length - 1];
+  console.log("iter")
+  console.log(iter)
+  arguments[0].then(function*(value) {
+    console.log("+++++++++++++++++++++++++++++++")
     try {
-      var next;
-      if (value.length === 1) {
-        next = iter.next(value[0]);
-      } else {
-        next = iter.next(value);
-      }
-      stack.pop();
+      if (iter === stack[stack.length - 1])
+      var next =  iter.next(value);
     } catch (ex) {
-      if (stack[stack.length] === iter) {
-        stack.pop();
-      }
+      console.error(ex)
       throw ex; //?
     }
-  }).catch(function(error) {
-    var next;
-    stack.push(iter);
-    try {
-      var next;
-      next = iter.next(error);
-      stack.pop();
-    } catch (ex) {
-      if (stack[stack.length] === iter) {
-        stack.pop();
+    if (next.done) {
+      iter = stack.pop();
+      if (iter === stack[stack.length - 1]) {
+        iter.next(value)
       }
-      throw ex;
+      yield value
+    }
+  }).catch(function*(error) {
+    console.log("---------------------------")
+    try {
+      if (iter === stack[stack.length - 1])
+      var next = iter.next(error);
+    } catch (ex) {
+      console.error(ex)
+      throw ex; //?
+    }
+    if (next.done) {
+      iter = stack.pop();
+      if (iter === stack[stack.length - 1]) {
+        iter.next(error)
+      }
+      yield value
     }
   });
-  return yield;
+  yield;
 }
 
-// Promify standard node async calbacks(error, data){...}
-function _promify(args) {
-  var output = [];
-  // await(asyncFunction, arg0, ...)
-  if (typeof args[0] === "function") {
-    output[0] = _c2p(args);
-    return output;
+function promify() {
+  var self = arguments[0];
+  var func = arguments[1];
+  var args = [];
+  for (var i = 2; i < arguments.length; i++) {
+    args.push(arguments[i]);
   }
-  // await(... , ..., [asyncFunction, arg0, ...], ..., [...] so on)
-  for (var i = 0; i < args.length; i++) {
-    if (args[i] instanceof Array) {
-      output[i] = _c2p(args[i]);
-    } else {
-      output[i] = args[i];
-    }
-  }
-  return output;
-}
-
-function _c2p(args) {
-  var func = args[0];
-  var output = [];
-  for (var i = 1; i < args.length; i++) {
-    output.push(args[i]);
-  }
-  return new Promise(function(ok, err) {
-    output.push(function(error, data) {
+  return new Promise(function(resolve, reject) {
+    args.push(function(error, data) {
+      console.log(data)
       if (error) {
-        err(error)
+        reject(error)
       } else {
-        ok(data);
+        if (arguments.length === 2) {
+          resolve(data);
+        } else {
+          resolve(arguments);
+        }
       }
     })
-    func.apply(this, output);
+    func.apply(self, args);
+  });
+}
+
+function preturn(value) {
+  return new Promise(function(resolve, reject){
+    resolve(value);
   });
 }
 
@@ -96,5 +94,5 @@ module.exports = {
   await: _await,
   async: _async,
   asyncroute: _asyncroute,
-  c2p: _c2p
+  promify: promify
 };

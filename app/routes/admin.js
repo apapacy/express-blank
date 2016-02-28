@@ -2,12 +2,12 @@
 var express = require('express');
 var router = express.Router();
 var fs = require("fs");
-var promify = require("../utils").promify;
+var promify = require("../utils").promify2;
 
 router.get('/json-editor/get', async function(req, res, next) {
   var lang = res.locals.lang;
   try {
-    var data = await promify(fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json");
+    var data = await promify(fs, fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json");
   } catch (ex) {
     console.log(ex);
     console.log(data);
@@ -22,21 +22,22 @@ router.get('/json-editor/get', async function(req, res, next) {
 
 router.post('/json-editor/post', async function(req, res, next) {
   var lang = res.locals.lang;
-  await promify(fs.writeFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", JSON.stringify(req.body, null, 2));
-  var data = await promify(fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", "UTF-8");
+  await promify(fs, fs.writeFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", JSON.stringify(req.body, null, 2));
+  var data = await promify(fs, fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".new.json", "UTF-8");
   res.send(data);
 });
 
 router.post('/json-editor/publish', async function(req, res, next) {
   var lang = res.locals.lang
-  await promify(fs.writeFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".json", JSON.stringify(req.body, null, 2), "UTF-8");
+  await promify(fs, fs.writeFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".json", JSON.stringify(req.body, null, 2));
+  console.log("222222222222222")
   require("../translations").reload();
-  var data = await promify(fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8");
+  var data = await promify(fs, fs.readFile, process.cwd() + "/app/Resources/translations/messages." + lang + ".json", "UTF-8");
   res.send(data);
 });
 
 router.post('/json-editor/upload', async function(req, res, next) {
-  var data = await promify(fs.writeFile, process.cwd() + "/public/uploads/" + req.query.filename, req.body);
+  var data = await promify(fs, fs.writeFile, process.cwd() + "/public/uploads/" + req.query.filename, req.body);
   res.send("OK");
 });
 

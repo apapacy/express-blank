@@ -1,4 +1,4 @@
-"use setrict";
+"use strict";
 
 require("coffee-script")
 require("coffee-script/register")
@@ -12,12 +12,12 @@ require('traceur').require.makeDefault(function(filename) {
   asyncGenerators: true,
   jsx:true,
 });
+require('node-jsx').install({extension: '.jsx'});
 
 
 
 
 //var db = require("./app/db7");
-var soap = require("./app/controller/soap.coffee");
 
 var express = require('express');
 var passport = require('./app/passport');
@@ -31,6 +31,7 @@ var routes = require('./app/routes/index');
 var users = require('./app/routes/users');
 var admin = require('./app/routes/admin');
 var soap = require('./app/routes/soap');
+var test = require('./app/routes/test');
 
 var app = express();
 // Twig engine is autoconfigured with where express is enables
@@ -67,6 +68,10 @@ app.use(require('node-sass-middleware')({
   outputStyle: 'compressed'
 }));
 
+
+
+
+
 app.use("^(/[^\\/]+)?/admin(/[\s\S]*)?",passport.authenticate(['basic'],{session: false}));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -86,6 +91,7 @@ app.use('^/?([a-z]{2})?', function(request, responce, next) {
 app.use('(/[a-z]{2})?', routes);
 app.use('(/[a-z]{2})?/admin', admin);
 app.use('/soap', soap);
+app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

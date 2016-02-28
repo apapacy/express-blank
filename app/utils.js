@@ -56,6 +56,7 @@ function promify2() {
   var func = arguments[1];
   var args = [];
   var next = 2;
+
   for (var i = next; i < arguments.length; i++) {
     args.push(arguments[i]);
   }
@@ -64,11 +65,7 @@ function promify2() {
       if (error) {
         reject(error)
       } else {
-        if (arguments.length === 2) {
-          resolve(data);
-        } else {
-          resolve(arguments);
-        }
+        resolve(data);
       }
     })
     func.apply(self, args);
