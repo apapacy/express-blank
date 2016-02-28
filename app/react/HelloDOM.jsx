@@ -1,10 +1,12 @@
 "use strict";
 var React = require('react');
+var MyChildComponent = require("./MyChildComponent.jsx");
+console.log(MyChildComponent.toString());
 
 class MyComponent extends React.Component {
   render() {
-    return <div>Hello World</div>;
+    return <div>Hello World <MyChildComponent /> {this.props.name}</div>;
   }
 }
 
-module.exports = React.createElement(MyComponent, null);
+module.exports = React.createElement(MyComponent, {name: "React"}, null);

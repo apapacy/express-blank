@@ -6,7 +6,7 @@ var config = require("../config");
 // Рабочий урл, параметры из конфигурации системы
 //var url = "http://" + config["app.soap.server"] + config["app.soap.path"] + "/wsdl?wsdl";
 //Урл для тестироварния от разработчиков 1с
-var url = "http://37.57.73.227/A2-TEST/ws/PersonalAccount?wsdl";
+var url = "http://aurafit.com.ua/AURA2-FIT/ws/PersonalAccount?wsdl";
 var auth = "Basic " + new Buffer(config["app.soap.login"] + ":" + config["app.soap.password"]).toString("base64");
 var args = {
   name: 'value'
@@ -52,7 +52,8 @@ async function GetShedule(StartDate, EndDate, clientID, ClubID) {
       clientID: String(clientID),
       ClubID: String(ClubID)
     });
-    shedules = await utils.promify2(undefined, xml2js.parseString, shedules[1].return, {
+    console.log(shedules.return)
+    shedules = await utils.promify2(undefined, xml2js.parseString, shedules.return, {
       explicitArray: false
     });
     shedules = shedules.shedules.shedule;

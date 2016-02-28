@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www --harmony  --ext '.js|.css|.html|.twig|.sass|.coffee'",
+    "start": "nodemon ./bin/www --harmony  --ext '.js|.css|.html|.twig|.sass|.coffee|.jsx'",
     "babel-jsx": "babel --presets react src --watch --out-dir public/assets"
   },
   "dependencies": {
