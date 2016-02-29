@@ -7,6 +7,11 @@ var config = {
 	output: {
 		path: path.join(__dirname, 'public/assets') // выходная директория
 	},
+  module: {
+       loaders: [
+           { test: /\.css$/, loader: "style-loader!css-loader" }
+       ]
+   },
   plugins: [
   		new BowerWebpackPlugin({
   			modulesDirectories: ['bower_components'],
