@@ -24,4 +24,8 @@ router.get(/\/shedules\/([^\/]+)?\/([^\/]+)?(\/([^\/]+))?(\/([^\/]+))?/, async f
   resp.json(shedules);
 });
 
+router.get("/test", function(req, resp, next){
+  soap.getClientCallback();
+});
+
 module.exports = router;

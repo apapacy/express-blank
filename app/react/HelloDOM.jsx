@@ -9,4 +9,4 @@ class MyComponent extends React.Component {
   }
 }
 
-module.exports = React.createElement(MyComponent, {name: "React"}, null);
+module.exports = MyComponent;

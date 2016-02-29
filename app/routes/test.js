@@ -7,8 +7,9 @@ var router = express.Router();
 router.all('/hello-jsx', function(req, res, next) {
   var React = require('react');
   var ReactDOMServer = require('react-dom/server');
-  var component = require("../react/HelloDOM.jsx");
-  var output = ReactDOMServer.renderToString(component);
+  var MyComponent = require("../react/HelloDOM.jsx");
+  var MyElement  = React.createElement(MyComponent, {name: "React"}, null);
+  var output = ReactDOMServer.renderToString(MyElement);
 
 
   res.send(output);

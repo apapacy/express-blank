@@ -40,5 +40,11 @@
     "traceur": "0.0.102",
     "twig": "^0.8.8",
     "xml2js": "^0.4.16"
+  },
+  "devDependencies": {
+    "bower-webpack-plugin": "^0.1.9",
+    "jsx-loader": "^0.13.2",
+    "react": "^0.14.7",
+    "webpack": "^1.12.14"
   }
 }

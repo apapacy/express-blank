@@ -1,0 +1,15 @@
+{
+  "name": "express",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Андрей Овчаренко <ovcharenkoav@meta.ua>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/apapacy/express-blank",
+  "moduleType": [],
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "react": "^0.14.7"
+  }
+}

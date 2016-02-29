@@ -1,19 +1,20 @@
 "use strict";
 
 var React = require('react');
-var ReactDOMServer = require('react-dom/server');
+var MyChildComponent = require("./MyChildComponent.jsx");
+console.log(MyChildComponent.toString());
 
 class MyComponent extends React.Component {
   render() {
     return React.createElement(
-      'div',
+      "div",
       null,
-      'Hello World'
+      "Hello World ",
+      React.createElement(MyChildComponent, null),
+      " ",
+      this.props.name
     );
   }
 }
 
-var output = ReactDOMServer.renderToString(React.createElement(MyComponent, null));
-console.log(output);
-
-module.exports = output;
+module.exports = MyComponent;

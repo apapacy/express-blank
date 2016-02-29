@@ -32,6 +32,18 @@ async function getClient() {
   return undefined;
 }
 
+
+function getClientCallback(next) {
+  var basic = new soap.BasicAuthSecurity(config["app.soap.login"], config["app.soap.password"]);
+  //soap.BasicAuthSecurity(config["app.soap.login"], config["app.soap.password"]);
+  for (var prop in soap.Client.super_)
+  console.log(prop)
+  soap.createClient(url,basic, function(error, client){
+    //client.setSecurity(new soap.BasicAuthSecurity(config["app.soap.login"], config["app.soap.password"]));
+    console.log(client);
+  });
+}
+
 async function GetShedule(StartDate, EndDate, clientID, ClubID) {
   console.log(arguments);
   var client = await getClient();
@@ -66,7 +78,8 @@ async function GetShedule(StartDate, EndDate, clientID, ClubID) {
 }
 
 module.exports = {
-  shedules: GetShedule
+  shedules: GetShedule,
+  getClientCallback: getClientCallback
 }
 
 
