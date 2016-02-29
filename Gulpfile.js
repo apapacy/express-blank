@@ -21,7 +21,8 @@ var gulp = require('gulp')
     , progeny = require('gulp-progeny')
     , minifyCss = require('gulp-minify-css')
     , browserSync = require('browser-sync')
-    , react = require('gulp-react');
+    , react = require('gulp-react')
+    , requireConvert = require("gulp-require-convert");
 
 
 var logger = function (prefix) {
@@ -205,6 +206,7 @@ gulp.task("dependencies:jsx:watch", ["dependencies:jsx:build"], function() {
    .pipe(rename(function (path) {
                    path.extname = ".es6";
                }))
+   .pipe(requireConvert())
    .pipe(gulp.dest('./frontend/javascripts/react'));
 });
 

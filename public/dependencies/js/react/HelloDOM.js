@@ -9,28 +9,31 @@ define(["exports"], function (exports) {
 
   function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-  var React = require('react');
-  var MyChildComponent = require("./MyChildComponent.jsx");
-  console.log(MyChildComponent.toString());
+  define(function (require, exports, module) {
+    "use strict";
+    var React = require('react');
+    var MyChildComponent = require("react/MyChildComponent");
+    console.log(MyChildComponent.toString());
 
-  var MyComponent = (function (_React$Component) {
-    _inherits(MyComponent, _React$Component);
+    var MyComponent = (function (_React$Component) {
+      _inherits(MyComponent, _React$Component);
 
-    function MyComponent() {
-      _classCallCheck(this, MyComponent);
+      function MyComponent() {
+        _classCallCheck(this, MyComponent);
 
-      _get(Object.getPrototypeOf(MyComponent.prototype), "constructor", this).apply(this, arguments);
-    }
-
-    _createClass(MyComponent, [{
-      key: "render",
-      value: function render() {
-        return React.createElement("div", null, "Hello World ", React.createElement(MyChildComponent, null), " ", this.props.name);
+        _get(Object.getPrototypeOf(MyComponent.prototype), "constructor", this).apply(this, arguments);
       }
-    }]);
 
-    return MyComponent;
-  })(React.Component);
+      _createClass(MyComponent, [{
+        key: "render",
+        value: function render() {
+          return React.createElement("div", null, "Hello World ", React.createElement(MyChildComponent, null), " ", this.props.name);
+        }
+      }]);
 
-  module.exports = MyComponent;
+      return MyComponent;
+    })(React.Component);
+
+    module.exports = MyComponent;
+  });
 });

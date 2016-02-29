@@ -1,4 +1,4 @@
-"use strict";
+define(function (require, exports, module) {"use strict";
 var React = require('react');
 var MyChildComponent = require("./MyChildComponent.jsx");
 console.log(MyChildComponent.toString());
@@ -10,3 +10,5 @@ class MyComponent extends React.Component {
 }
 
 module.exports = MyComponent;
+
+});

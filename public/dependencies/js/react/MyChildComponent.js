@@ -9,26 +9,29 @@ define(["exports"], function (exports) {
 
   function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-  var React = require("react");
+  define(function (require, exports, module) {
+    "use strict";
+    var React = require("react");
 
-  var MyChildComponent = (function (_React$Component) {
-    _inherits(MyChildComponent, _React$Component);
+    var MyChildComponent = (function (_React$Component) {
+      _inherits(MyChildComponent, _React$Component);
 
-    function MyChildComponent() {
-      _classCallCheck(this, MyChildComponent);
+      function MyChildComponent() {
+        _classCallCheck(this, MyChildComponent);
 
-      _get(Object.getPrototypeOf(MyChildComponent.prototype), "constructor", this).apply(this, arguments);
-    }
-
-    _createClass(MyChildComponent, [{
-      key: "render",
-      value: function render() {
-        return React.createElement("span", null, "*****+-+***");
+        _get(Object.getPrototypeOf(MyChildComponent.prototype), "constructor", this).apply(this, arguments);
       }
-    }]);
 
-    return MyChildComponent;
-  })(React.Component);
+      _createClass(MyChildComponent, [{
+        key: "render",
+        value: function render() {
+          return React.createElement("span", null, "+-+***");
+        }
+      }]);
 
-  module.exports = MyChildComponent;
+      return MyChildComponent;
+    })(React.Component);
+
+    module.exports = MyChildComponent;
+  });
 });

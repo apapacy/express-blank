@@ -10,6 +10,7 @@
   "moduleType": [],
   "dependencies": {
     "jquery": "^2.2.1",
-    "react": "^0.14.7"
+    "react": "~0.14.7",
+    "requirejs": "~2.1.22"
   }
 }
