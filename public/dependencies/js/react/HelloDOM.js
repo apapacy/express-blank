@@ -12,7 +12,7 @@ define(["exports"], function (exports) {
   define(function (require, exports, module) {
     "use strict";
     var React = require('react');
-    var MyChildComponent = require("react/MyChildComponent");
+    var MyChildComponent = require("./MyChildComponent.jsx");
     console.log(MyChildComponent.toString());
 
     var MyComponent = (function (_React$Component) {

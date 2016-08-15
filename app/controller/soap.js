@@ -6,7 +6,7 @@ var config = require("../config");
 // Рабочий урл, параметры из конфигурации системы
 //var url = "http://" + config["app.soap.server"] + config["app.soap.path"] + "/wsdl?wsdl";
 //Урл для тестироварния от разработчиков 1с
-var url = "http://aurafit.com.ua/AURA2-FIT/ws/PersonalAccount?wsdl";
+var url = "http://89.162.142.62/AURA2-FIT/ws/PersonalAccount?wsdl";
 var auth = "Basic " + new Buffer(config["app.soap.login"] + ":" + config["app.soap.password"]).toString("base64");
 var args = {
   name: 'value'
@@ -58,13 +58,30 @@ async function GetShedule(StartDate, EndDate, clientID, ClubID) {
   }
   console.log("+++++"+ClubID+"*************")
   try {
-    var shedules = await utils.promify2(client, client.GetShedule, {
-      StartDate: StartDate,
-      EndDate: EndDate,
-      clientID: String(clientID),
-      ClubID: String(ClubID)
-    });
-    console.log(shedules.return)
+    var promises = [];
+    for (var j = 0; j<5;j++)
+    for (var i = 0; i< 100; i++) {
+      StartDate = new Date()
+      console.log(StartDate)
+      StartDate.setDate(StartDate.getDate() - i - 8);
+      console.log(StartDate)
+      StartDate = StartDate.toISOString().substring(0, 10);
+      console.log(StartDate)
+      EndDate = (new Date())
+      EndDate.setDate(EndDate.getDate() - i);
+      EndDate = EndDate.toISOString().substring(0, 10);
+      promises[i] = utils.promify2(client, client.GetShedule, {
+        StartDate: StartDate,
+        EndDate: EndDate,
+        clientID: String(clientID),
+        ClubID: String(ClubID)
+      });
+    }
+    var shedules = await Promise.all(promises)
+    for (var i =0; i< 100; i++) {
+      console.log(i + '=' + shedules[i].return.length)
+    }
+    return shedules[99].return;
     shedules = await utils.promify2(undefined, xml2js.parseString, shedules.return, {
       explicitArray: false
     });
