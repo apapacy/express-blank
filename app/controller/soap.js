@@ -6,17 +6,14 @@ var config = require("../config");
 // Рабочий урл, параметры из конфигурации системы
 //var url = "http://" + config["app.soap.server"] + config["app.soap.path"] + "/wsdl?wsdl";
 //Урл для тестироварния от разработчиков 1с
-var url = "http://89.162.142.62/AURA2-FIT/ws/PersonalAccount?wsdl";
+var url = "http://89.162.142.62/AURA1-FIT/ws/PersonalAccount?wsdl";
 var auth = "Basic " + new Buffer(config["app.soap.login"] + ":" + config["app.soap.password"]).toString("base64");
 var args = {
   name: 'value'
 };
 
-var client;
 async function getClient() {
-  if (client) {
-    return client;
-  }
+  var client;
   try {
     client = await utils.promify2(soap, soap.createClient, url, {
       wsdl_headers: {
@@ -59,8 +56,9 @@ async function GetShedule(StartDate, EndDate, clientID, ClubID) {
   console.log("+++++"+ClubID+"*************")
   try {
     var promises = [];
-    for (var j = 0; j<5;j++)
+    for (var j = 0; j<2;j++)
     for (var i = 0; i< 100; i++) {
+      client = await getClient();
       StartDate = new Date()
       console.log(StartDate)
       StartDate.setDate(StartDate.getDate() - i - 8);

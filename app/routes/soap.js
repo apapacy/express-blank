@@ -5,7 +5,7 @@ var router = express.Router();
 var soap = require("../controller/soap");
 
 //router.get("/shedules/(:dateStart)?/(:dateEnd)?/(:clientID)?/(:clubID)?", async function(req, resp, next){
-router.get(/\/shedules\/([^\/]+)?\/([^\/]+)?(\/([^\/]+))?(\/([^\/]+))?/, async function(req, resp, next){
+router.get(/\/schedules\/([^\/]+)?\/([^\/]+)?(\/([^\/]+))?(\/([^\/]+))?/, async function(req, resp, next){
   var dateStart = req.params[0];
   var dateEnd = req.params[1];
   var clientId = req.params[5];
